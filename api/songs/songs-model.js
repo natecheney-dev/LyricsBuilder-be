@@ -1,3 +1,4 @@
+const { acceptsEncodings } = require('express/lib/request');
 const db = require('../../data/dbConfig')
 
 module.exports = {
@@ -6,6 +7,7 @@ module.exports = {
     insert,
     update,
     remove,
+    getLyrics,
 };
 
 
@@ -31,3 +33,14 @@ function update(id, changes) {
 function remove(id) {
     return db('actions').where('id', id).del();
 }
+
+
+
+function getLyrics(id) {
+    return db('lyrics as l')
+        .join('songs as s', 's.id', 'l.song_id')
+        .select('l.lyrics_id', 'l.words', 'l.lineNumber')
+        .where('s.id', id)
+  
+}
+

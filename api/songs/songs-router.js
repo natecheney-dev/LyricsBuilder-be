@@ -5,7 +5,7 @@ const Songs = require('./songs-model')
 const { validateId, validateBody } = require('./songs-middleware')
 
 router.get('/', (req, res, next) => {
-    
+
     Songs.getAll()
         .then(item => {
             console.log(item[0].lyrics);
@@ -24,7 +24,6 @@ router.post('/', validateBody, async (req, res, next) => {
             author: req.author,
             songName: req.songName,
             totalTime: req.totalTime,
-            lyrics: req.lyrics
         })
         res.status(201).json(song)
     }
@@ -51,12 +50,22 @@ router.put('/:id', validateId, validateBody, (req, res, next) => {
 })
 
 router.delete('/:id', validateId, (req, res, next) => {
-    User.remove(req.params.id)
+    Songs.remove(req.params.id)
         .then(() => {
             res.status(200).json(req.songs)
         })
         .catch(next);
 
 });
+
+
+router.get('/:id/lyrics', validateId, (req, res, next) => {
+    console.log("test123");
+    Songs.getLyrics(req.params.id)
+        .then(lyrics => {
+            res.status(200).json(lyrics)
+        })
+        .catch(next)
+})
 
 module.exports = router;
