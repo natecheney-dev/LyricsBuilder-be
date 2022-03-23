@@ -8,6 +8,8 @@ module.exports = {
     update,
     remove,
     getLyrics,
+    removeLyrics,
+   
 };
 
 
@@ -41,6 +43,14 @@ function getLyrics(id) {
         .join('songs as s', 's.id', 'l.song_id')
         .select('l.lyrics_id', 'l.words', 'l.lineNumber')
         .where('s.id', id)
-  
 }
+
+function removeLyrics(id) {
+    return db('lyrics as l')
+        .where('l.song_id', id)
+        .del()
+}
+
+
+
 

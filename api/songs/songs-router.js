@@ -60,12 +60,22 @@ router.delete('/:id', validateId, (req, res, next) => {
 
 
 router.get('/:id/lyrics', validateId, (req, res, next) => {
-    console.log("test123");
     Songs.getLyrics(req.params.id)
         .then(lyrics => {
             res.status(200).json(lyrics)
         })
         .catch(next)
 })
+
+router.delete('/:id/lyrics', validateId, (req, res, next) => {
+    Songs.removeLyrics(req.params.id)
+        .then(() => {
+            res.status(200).json(req.lyrics)
+        })
+        .catch(next);
+
+})
+
+
 
 module.exports = router;
