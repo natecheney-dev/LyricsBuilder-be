@@ -5,11 +5,24 @@ const getAll = async () => {
 }
 
 const getById = async (id) => {
-    return db('lyrics').where('lyrics', id).first();
+    return db('lyrics').where('lyrics_id', id).first();
 };
 
+
+const addReturn = async (stuff) => {
+    console.log(stuff)
+    return db('lyrics')
+        .insert(stuff)
+        .then(([lyrics_id]) => getById(lyrics_id));
+}
+
+
 const add = async (lyrics_array) => {
-    return db('lyrics').insert(lyrics_array.map(item => item)).returning('*');
+    console.log(lyrics_array)
+    for (let i = 0; i < lyrics_array.length; i++) {
+        addReturn(lyrics_array[i])
+    }
+
 };
 
 const update = (id, lyrics_object) => {

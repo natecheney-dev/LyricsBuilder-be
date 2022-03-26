@@ -21,8 +21,8 @@ async function validateId(req, res, next) {
 
 async function validateBody(req, res, next) {
     try {
-        const { id, author, songName, lyrics, totalTime } = req.body
-        if (!id, author, songName, lyrics, totalTime) {
+        const { id, author, songName, totalTime } = req.body
+        if ( !author, !songName, !totalTime) {
             res.status(400).json({
                 message: 'Missing information...'
             })
@@ -32,7 +32,7 @@ async function validateBody(req, res, next) {
             req.author = author,
             req.songName = songName,
             req.totalTime = totalTime,
-            req.lyrics = lyrics
+            
             next();
         }
     }

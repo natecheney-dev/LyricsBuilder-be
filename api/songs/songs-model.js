@@ -9,13 +9,32 @@ module.exports = {
     remove,
     getLyrics,
     removeLyrics,
-   
+
 };
+
+
+// function getAll() {
+//     return db('songs')
+// }
+
 
 
 function getAll() {
     return db('songs')
+        .innerJoin('lyrics', 'lyrics.song_id', 'songs.id')
+        .select([
+            'songs.songName',
+            'songs.author',
+            'songs.totalTime',
+            db.raw('json_group_array(json_object("lineNumber:",lyrics.lineNumber,"words:",lyrics.words)) as lyrics')
+           
+        ])
+        .groupBy('songs.songName', 'songs.id')
+        
 }
+
+
+
 function get(id) {
     return db('songs')
         .where({ id })

@@ -5,7 +5,7 @@ const Songs = require('./songs-model')
 const { validateId, validateBody } = require('./songs-middleware')
 
 router.get('/', (req, res, next) => {
-
+    console.log(req.body)
     Songs.getAll()
         .then(item => {
             console.log(item[0].lyrics);
